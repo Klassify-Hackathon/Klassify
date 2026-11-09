@@ -1,98 +1,211 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from "@expo/vector-icons";
+import * as DocumentPicker from "expo-document-picker";
+import { useRouter } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { useLang } from "@/components/i18n";
+import { Row, T } from "@/components/ui";
+import { Kind } from "@/lib/analyze";
+import { colors, FEATURES, radius, space } from "@/lib/theme";
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+const BLACK = "#151515";
+
+// Simple pastel illustration built from shapes: no image assets needed.
+function Art() {
+  const sparks = [
+    { top: 4, left: 6 },
+    { top: 40, right: 0 },
+    { bottom: 30, left: 0 },
+    { bottom: 6, right: 24 },
+  ];
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <View style={s.art}>
+      <View
+        style={[
+          s.shape,
+          {
+            backgroundColor: "#C9C6FA",
+            width: 240,
+            height: 240,
+            borderRadius: 120,
+            left: 20,
+            top: 10,
+          },
+        ]}
+      />
+      <View
+        style={[
+          s.shape,
+          {
+            backgroundColor: "#F4CFEA",
+            width: 210,
+            height: 180,
+            borderRadius: 95,
+            left: 35,
+            top: 70,
+          },
+        ]}
+      />
+      <View
+        style={[
+          s.shape,
+          {
+            backgroundColor: "#9ED9F2",
+            width: 130,
+            height: 130,
+            borderRadius: 40,
+            left: 75,
+            top: 65,
+          },
+        ]}
+      >
+        <Ionicons name="shield-checkmark" size={72} color={BLACK} />
+      </View>
+      <View style={[s.chip, { top: 28, right: 34 }]}>
+        <Ionicons name="videocam" size={24} color={BLACK} />
+      </View>
+      <View style={[s.chip, { bottom: 34, left: 28 }]}>
+        <Ionicons name="mic" size={24} color={BLACK} />
+      </View>
+      {sparks.map((p, i) => (
+        <Text key={i} style={[s.spark, p]}>
+          ✦
+        </Text>
+      ))}
+    </View>
   );
 }
 
 export default function HomeScreen() {
+  const { t, toggle } = useLang();
+  const router = useRouter();
+
+  async function pick(kind: Kind) {
+    const res = await DocumentPicker.getDocumentAsync({
+      type: kind === "audio" ? ["audio/*"] : ["video/*", "image/*"],
+      copyToCacheDirectory: true,
+    });
+    if (res.canceled) return;
+    const file = res.assets[0];
+    const detected: Kind = file.mimeType?.startsWith("image") ? "image" : kind;
+    router.push({
+      pathname: "/result",
+      params: {
+        uri: file.uri,
+        name: file.name,
+        kind: detected,
+        mime: file.mimeType ?? "",
+      },
+    });
+  }
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
+      <View style={s.wrap}>
+        <Row style={{ justifyContent: "flex-end" }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t.otherLang}
+            onPress={toggle}
+            style={s.lang}
+          >
+            <T v="small" bold color={BLACK}>
+              {t.otherLang}
+            </T>
+          </Pressable>
+        </Row>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        <ScrollView contentContainerStyle={s.mid}>
+          <Art />
+          <T
+            v="title"
+            style={{ textAlign: "center", fontSize: 34, lineHeight: 40 }}
+          >
+            {t.tagline}
+          </T>
+          <T color={colors.muted} style={{ textAlign: "center" }}>
+            {t.heroSub}
+          </T>
+          {FEATURES.shareTip ? (
+            <T v="small" color={colors.muted} style={{ textAlign: "center" }}>
+              {t.shareTip}
+            </T>
+          ) : null}
+        </ScrollView>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        <View style={{ gap: space.s }}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => pick("video")}
+            style={[s.btn, { backgroundColor: BLACK }]}
+          >
+            <T bold color="#FFFFFF" style={{ textAlign: "center" }}>
+              {t.pickVisual}
+            </T>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => pick("audio")}
+            style={[s.btn, { borderWidth: 1.5, borderColor: BLACK }]}
+          >
+            <T bold color={BLACK} style={{ textAlign: "center" }}>
+              {t.pickAudio}
+            </T>
+          </Pressable>
+          <T v="small" color={colors.muted} style={{ textAlign: "center" }}>
+            {t.privacy}
+          </T>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
+const s = StyleSheet.create({
+  wrap: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    padding: space.m,
+    width: "100%",
+    maxWidth: 560,
+    alignSelf: "center",
+    gap: space.s,
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  mid: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: space.m,
+    paddingVertical: space.m,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  lang: {
+    minHeight: 44,
+    paddingHorizontal: space.m,
+    justifyContent: "center",
+    borderRadius: radius.pill,
+    borderWidth: 1.5,
+    borderColor: BLACK,
   },
-  title: {
-    textAlign: 'center',
+  btn: {
+    minHeight: 60,
+    borderRadius: radius.pill,
+    justifyContent: "center",
+    paddingHorizontal: space.l,
   },
-  code: {
-    textTransform: 'uppercase',
+  art: { width: 280, height: 260 },
+  shape: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  chip: {
+    position: "absolute",
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  spark: { position: "absolute", fontSize: 26, color: "#D9CFA8" },
 });
