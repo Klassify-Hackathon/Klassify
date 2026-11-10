@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Deep AI
+# 🛡️ KLASSIFY
 
 ### Is this video, photo or voice message real? Check it the moment it arrives.
 
