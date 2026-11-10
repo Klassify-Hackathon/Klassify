@@ -38,10 +38,19 @@
         "expo-share-intent",
         {
           "disableIOS": true,
-          "androidIntentFilters": ["image/*", "video/*", "audio/*"],
-          "androidMultiIntentFilters": ["image/*", "video/*", "audio/*"]
+          "androidIntentFilters": [
+            "image/*",
+            "video/*",
+            "audio/*"
+          ],
+          "androidMultiIntentFilters": [
+            "image/*",
+            "video/*",
+            "audio/*"
+          ]
         }
-      ]
+      ],
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true,
