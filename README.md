@@ -13,9 +13,7 @@
 
 </div>
 
-> **Working title.** "Deep AI" is a placeholder name.
-> **Prototype status:** the screens and flow are built. The detection results shown in the app are **demo data** until the backend is connected (see [Status](#-status)).
-
+> **Prototype status:** the screens and flow are built. The detection results shown in the app are **demo data** until the backend is connected
 ---
 
 ## 🎯 The problem
