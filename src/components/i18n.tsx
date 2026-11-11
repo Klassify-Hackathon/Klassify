@@ -11,6 +11,7 @@ import {
 const en = {
   appName: "Deep AI",
   otherLang: "العربية",
+  signOut: "Sign out",
   tagline: "Is this video, photo or voice message real?",
   heroSub: "Choose a file and get a clear answer.",
   pickVisual: "Check a video or photo",
@@ -87,6 +88,7 @@ const en = {
 const ar: typeof en = {
   appName: "Deep AI",
   otherLang: "English",
+  signOut: "خروج",
   tagline: "هل هذا الفيديو أو الصورة أو الرسالة الصوتية حقيقي؟",
   heroSub: "اختر ملفًا واحصل على إجابة واضحة.",
   pickVisual: "افحص فيديو أو صورة",
@@ -170,15 +172,13 @@ const LangCtx = createContext<Ctx>({
   toggle: () => {},
 });
 
-// RTL is handled per component (row-reverse + text alignment), so switching language
-// needs no app reload. For production, use I18nManager and expo-localization instead.
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>("en");
   const toggle = useCallback(
     () => setLang((l) => (l === "en" ? "ar" : "en")),
     [],
   );
-  
+
   const value = useMemo(
     () => ({ lang, isRTL: lang === "ar", t: dict[lang], toggle }),
     [lang, toggle],

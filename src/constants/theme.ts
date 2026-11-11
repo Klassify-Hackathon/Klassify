@@ -20,10 +20,8 @@ export const colors = {
 export const space = { xs: 6, s: 10, m: 16, l: 24, xl: 32 };
 export const radius = { m: 14, l: 24, pill: 999 };
 
-// Flip these only when the feature really exists, so the UI never promises more than the app does.
 export const FEATURES = {
-  shareTip: false, // true once share-to-app from WhatsApp works (needs a development build)
+  shareTip: true,
 };
 
-// The analysis in src/lib/analyze.ts is a demo until it calls your backend.
-export const IS_MOCK = true;
+export const IS_MOCK = false;

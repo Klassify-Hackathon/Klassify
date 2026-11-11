@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useLang } from "@/components/i18n";
 import { Row, T } from "@/components/ui";
+import { useAuth } from "@/lib/auth";
 import { Kind } from "@/lib/analyze";
 import { colors, FEATURES, radius, space } from "@/lib/theme";
 
@@ -79,6 +80,7 @@ function Art() {
 
 export default function HomeScreen() {
   const { t, toggle } = useLang();
+  const { signOut } = useAuth();
   const router = useRouter();
 
   async function pick(kind: Kind) {
@@ -104,6 +106,18 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
       <View style={s.wrap}>
         <Row style={{ justifyContent: "flex-end" }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Sign out"
+            onPress={() => {
+              signOut();
+            }}
+            style={s.lang}
+          >
+            <T v="small" bold color={BLACK}>
+              {t.signOut}
+            </T>
+          </Pressable>
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t.otherLang}

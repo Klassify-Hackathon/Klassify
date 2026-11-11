@@ -1,13 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps, ReactNode } from "react";
 import {
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextProps,
-    View,
-    ViewStyle,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextProps,
+  View,
+  ViewStyle,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

@@ -18,7 +18,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.klassify"
+      "package": "com.anonymous.klassify",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "server",
@@ -50,7 +51,16 @@
           ]
         }
       ],
-      "expo-video"
+      "expo-video",
+      [
+        "./src/plugins/bom.js",
+        {
+          "bom": "34.19.0"
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true,

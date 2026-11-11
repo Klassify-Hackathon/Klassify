@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "932347897209",
+    "project_id": "klassify-app",
+    "storage_bucket": "klassify-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932347897209:android:9d86c0ad6a01e36efa7ba8",
+        "android_client_info": {
+          "package_name": "com.anonymous.klassify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932347897209-56h4vbrmdkogdt7ghu4emq9qtqqhblba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anonymous.klassify",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "932347897209-3bltg33levk43r9qc10ad5sppfuk5eja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFFTc63XNlu98YlkPbYhWjk9BwuD5vyDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932347897209-3bltg33levk43r9qc10ad5sppfuk5eja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

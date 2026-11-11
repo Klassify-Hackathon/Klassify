@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932347897209",
+    "project_id": "klassify-app",
+    "storage_bucket": "klassify-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932347897209:android:9d86c0ad6a01e36efa7ba8",
+        "android_client_info": {
+          "package_name": "com.anonymous.klassify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFFTc63XNlu98YlkPbYhWjk9BwuD5vyDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

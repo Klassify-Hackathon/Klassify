@@ -26,4 +26,4 @@ export const FEATURES = {
 };
 
 // The analysis in src/lib/analyze.ts is a demo until it calls your backend.
-export const IS_MOCK = true;
+export const IS_MOCK = false;
